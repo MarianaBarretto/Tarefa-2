@@ -13,6 +13,13 @@ void ligar_todos () {
   gpio_put(pin_r, true);
 }
 
+// Função para desligar todos os LEDs
+void desligar_todos () {
+  gpio_put(pin_g, false);
+  gpio_put(pin_b, false);
+  gpio_put(pin_r, false);
+}
+
 int main() {
     stdio_init_all(); // Inicializa as interfaces de entrada e saída
 
