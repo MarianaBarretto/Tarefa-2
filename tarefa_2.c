@@ -23,4 +23,12 @@ void desligar_todos () {
 int main() {
     stdio_init_all(); // Inicializa as interfaces de entrada e saída
 
+    // Inicialização dos pinos para saída dos leds
+    gpio_init(pin_g);
+    gpio_set_dir(pin_g, GPIO_OUT);
+    gpio_init(pin_b);
+    gpio_set_dir(pin_b, GPIO_OUT);
+    gpio_init(pin_r);
+    gpio_set_dir(pin_r, GPIO_OUT);
+    
 }
