@@ -75,6 +75,7 @@ void apagar_led_vermelho () {
 
 int main() {
     stdio_init_all(); // Inicializa as interfaces de entrada e saída
+    setup_gpio();     // Configura os GPIO
 
     // Inicialização dos pinos para saída dos leds
     gpio_init(pin_g);
