@@ -7,14 +7,14 @@
 #define pin_r 13 // LED vermelho
 
 // Função para ligar todos os LEDs
-void ligar_todos () {
+void ligar_leds () {
     gpio_put(pin_g, true);
     gpio_put(pin_b, true);
     gpio_put(pin_r, true);
 }
 
 // Função para desligar todos os LEDs
-void desligar_todos () {
+void desligar_leds () {
     gpio_put(pin_g, false);
     gpio_put(pin_b, false);
     gpio_put(pin_r, false);
@@ -34,8 +34,8 @@ int main() {
     while (true) {
         /*Comentário a ser apagado:
         Utilizar as funções abaixo para ligar e desligar os LEDs.*/
-        ligar_todos (); // Irá ligar todos os pinos (3), tomando a cor branca
-        desligar_todos (); // Irá desligar todos os pinos (3), o LED apaga
+        ligar_leds (); // Irá ligar todos os pinos (3), tomando a cor branca
+        desligar_leds (); // Irá desligar todos os pinos (3), o LED apaga
     }
     
 }
