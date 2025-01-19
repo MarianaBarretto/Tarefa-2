@@ -1,10 +1,29 @@
-#include <stdio.h>
+git init#include <stdio.h>
 #include "pico/stdlib.h"
 
 // Declaração de pinos de saídas dos LEDs
 #define pin_g 11 // LED verde
 #define pin_b 12 // LED azul
 #define pin_r 13 // LED vermelho
+
+// Definição do pino do buzzer
+#define BUZZER_GPIO 21
+
+
+// Função para inicializar o GPIO
+void setup_gpio() {
+    gpio_init(BUZZER_GPIO);          // Inicializa o GPIO do buzzer
+    gpio_set_dir(BUZZER_GPIO, GPIO_OUT); // Configura o pino como saída
+}
+
+
+// Função para acionar o buzzer por 2 segundos
+void activate_buzzer() {
+    gpio_put(BUZZER_GPIO, 1); // Liga o buzzer
+    sleep_ms(2000);           // Espera por 2 segundos
+    gpio_put(BUZZER_GPIO, 0); // Desliga o buzzer
+}
+
 
 // Função para ligar todos os LEDs
 void ligar_leds () {
@@ -76,7 +95,17 @@ int main() {
         apagar_led_verde (); // Irá apagar o Led Verde
         apagar_led_azul (); // Irá apagar o Led Azul
         apagar_led_vermelho (); // Irá apagar o Led Vermelho
-
+  
+        printf("Digite 'Buzzer' para ativar o buzzer por 2 segundos.\n");
+        
+        char command[10]; // Buffer para armazenar o comando
+        scanf("%9s", command); // Lê o comando digitado no terminal
+        
+        if (strcmp(command, "Buzzer") == 0) {
+            printf("Buzzer ativado.\n");
+            activate_buzzer();
+        } 
+    
     }
     
 }
