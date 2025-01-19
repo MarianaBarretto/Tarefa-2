@@ -30,5 +30,12 @@ int main() {
     gpio_set_dir(pin_b, GPIO_OUT);
     gpio_init(pin_r);
     gpio_set_dir(pin_r, GPIO_OUT);
+
+    while (true) {
+        /*Comentário a ser apagado:
+        Utilizar as funções abaixo para ligar e desligar os LEDs.*/
+        ligar_todos (); // Irá ligar todos os pinos (3), tomando a cor branca
+        desligar_todos (); // Irá desligar todos os pinos (3), o LED apaga
+    }
     
 }
