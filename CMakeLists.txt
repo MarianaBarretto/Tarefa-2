@@ -42,11 +42,11 @@ pico_set_program_version(tarefa_2 "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(tarefa_2 0)
-pico_enable_stdio_usb(tarefa_2 0)
+pico_enable_stdio_usb(tarefa_2 1)
 
 # Add the standard library to the build
 target_link_libraries(tarefa_2
-        pico_stdlib)
+        pico_stdlib pico_stdio_usb)
 
 # Add the standard include files to the build
 target_include_directories(tarefa_2 PRIVATE
