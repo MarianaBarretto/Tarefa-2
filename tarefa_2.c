@@ -1,112 +1,112 @@
-git init#include <stdio.h>
+#include <stdio.h>
+#include <string.h>
 #include "pico/stdlib.h"
 
-// Declaração de pinos de saídas dos LEDs
-#define pin_g 11 // LED verde
-#define pin_b 12 // LED azul
-#define pin_r 13 // LED vermelho
+#define GPIO_VERDE 11
+#define GPIO_AZUL 12
+#define GPIO_VERMELHO 13
+#define GPIO_BUZZER 21
 
-// Definição do pino do buzzer
-#define BUZZER_GPIO 21
-
-
-// Função para inicializar o GPIO
-void setup_gpio() {
-    gpio_init(BUZZER_GPIO);          // Inicializa o GPIO do buzzer
-    gpio_set_dir(BUZZER_GPIO, GPIO_OUT); // Configura o pino como saída
+// Função para configurar os GPIOs
+void setup() {
+    stdio_init_all(); // Inicializa o USB 
+    sleep_ms(2000); // Aguarda 2 segundos para estabilizar a conexão USB
+    
+    gpio_init(GPIO_VERDE);
+    gpio_init(GPIO_AZUL);
+    gpio_init(GPIO_VERMELHO);
+    gpio_init(GPIO_BUZZER);
+    
+    gpio_set_dir(GPIO_VERDE, GPIO_OUT);
+    gpio_set_dir(GPIO_AZUL, GPIO_OUT);
+    gpio_set_dir(GPIO_VERMELHO, GPIO_OUT);
+    gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
 }
 
-
-// Função para acionar o buzzer por 2 segundos
-void activate_buzzer() {
-    gpio_put(BUZZER_GPIO, 1); // Liga o buzzer
-    sleep_ms(2000);           // Espera por 2 segundos
-    gpio_put(BUZZER_GPIO, 0); // Desliga o buzzer
+// Função para gerar pulsos no buzzer e produzir um som alto
+void play_buzzer(int duration_ms) {
+    int tempo = duration_ms;
+    while (tempo > 0) {
+        gpio_put(GPIO_BUZZER, 1);  // Liga o buzzer
+        sleep_ms(1);              // Mantém ligado por 1ms
+        gpio_put(GPIO_BUZZER, 0);  // Desliga o buzzer
+        sleep_ms(1);              // Aguarda 1ms antes de repetir
+        tempo -= 2;               // Total de 2ms por ciclo
+    }
 }
 
-
-// Função para ligar todos os LEDs
-void ligar_leds () {
-    gpio_put(pin_g, true);
-    gpio_put(pin_b, true);
-    gpio_put(pin_r, true);
+// Função para controlar LEDs e o buzzer baseado nos comandos
+void control_leds(const char *command) {
+    if (strcmp(command, "VERDE") == 0) {
+        gpio_put(GPIO_VERDE, 1);
+        gpio_put(GPIO_AZUL, 0);
+        gpio_put(GPIO_VERMELHO, 0);
+        printf("LED VERDE ligado.\n");
+    } else if (strcmp(command, "AZUL") == 0) {
+        gpio_put(GPIO_VERDE, 0);
+        gpio_put(GPIO_AZUL, 1);
+        gpio_put(GPIO_VERMELHO, 0);
+        printf("LED AZUL ligado.\n");
+    } else if (strcmp(command, "VERMELHO") == 0) {
+        gpio_put(GPIO_VERDE, 0);
+        gpio_put(GPIO_AZUL, 0);
+        gpio_put(GPIO_VERMELHO, 1);
+        printf("LED VERMELHO ligado.\n");
+    } else if (strcmp(command, "BRANCO") == 0) {
+        gpio_put(GPIO_VERDE, 1);
+        gpio_put(GPIO_AZUL, 1);
+        gpio_put(GPIO_VERMELHO, 1);
+        printf("Todos os LEDs ligados (BRANCO).\n");
+    } else if (strcmp(command, "DESLIGAR") == 0) {
+        gpio_put(GPIO_VERDE, 0);
+        gpio_put(GPIO_AZUL, 0);
+        gpio_put(GPIO_VERMELHO, 0);
+        printf("Todos os LEDs desligados.\n");
+    } else if (strcmp(command, "BUZZER") == 0) {
+        printf("Buzzer ativado por 2 segundos.\n");
+        play_buzzer(2000);  // Toca o buzzer por 2000ms
+    } else {
+        printf("Comando desconhecido: %s\n", command);
+        printf("Comandos disponíveis: VERDE, AZUL, VERMELHO, BRANCO, DESLIGAR, BUZZER.\n");
+    }
 }
-
-// Função para desligar todos os LEDs
-void desligar_leds () {
-    gpio_put(pin_g, false);
-    gpio_put(pin_b, false);
-    gpio_put(pin_r, false);
-}
-
-// Função para acender os Leds individuais
-
-void acender_led_verde () {
-    // Acender LED verde
-    gpio_put(pin_g, 1);
-}  
-
-void acender_led_azul () {
-    // Acender LED azul
-    gpio_put(pin_b, 1);
-}   
-
-void acender_led_vermelho () {
-    // Acender LED vermelho
-    gpio_put(pin_r, 1);
-}   
-
-// Função para apagar os Leds individuais
-
-void apagar_led_verde () {
-    // Apagar LED verde
-    gpio_put(pin_g, 0);
-}  
-
-void apagar_led_azul () {
-    // Apagar LED azul
-    gpio_put(pin_b, 0);
-}   
-
-void apagar_led_vermelho () {
-    // Apagar LED vermelho
-    gpio_put(pin_r, 0);
-}   
 
 int main() {
-    stdio_init_all(); // Inicializa as interfaces de entrada e saída
-    setup_gpio();     // Configura os GPIO
+    setup();
 
-    // Inicialização dos pinos para saída dos leds
-    gpio_init(pin_g);
-    gpio_set_dir(pin_g, GPIO_OUT);
-    gpio_init(pin_b);
-    gpio_set_dir(pin_b, GPIO_OUT);
-    gpio_init(pin_r);
-    gpio_set_dir(pin_r, GPIO_OUT);
+    char command[20] = "";
+    int index = 0;
+    bool usb_message_shown = false;
 
     while (true) {
-        /*Comentário a ser apagado:
-        Utilizar as funções abaixo para ligar e desligar os LEDs.*/
-        ligar_leds (); // Irá ligar todos os pinos (3), tomando a cor branca
-        desligar_leds (); // Irá desligar todos os pinos (3), o LED apaga
-        acender_led_verde (); // Irá acender o Led Verde
-        acender_led_azul (); // Irá acender o Led Azul
-        acender_led_vermelho (); // Irá acender o Led Vermelho
-        apagar_led_verde (); // Irá apagar o Led Verde
-        apagar_led_azul (); // Irá apagar o Led Azul
-        apagar_led_vermelho (); // Irá apagar o Led Vermelho
-  
-        printf("Digite 'Buzzer' para ativar o buzzer por 2 segundos.\n");
-        
-        char command[10]; // Buffer para armazenar o comando
-        scanf("%9s", command); // Lê o comando digitado no terminal
-        
-        if (strcmp(command, "Buzzer") == 0) {
-            printf("Buzzer ativado.\n");
-            activate_buzzer();
-        } 
-    
+        if (stdio_usb_connected()) {
+            if (!usb_message_shown) {
+                printf("Dispositivo inicializado.\n");
+                printf("Comandos disponíveis: VERDE, AZUL, VERMELHO, BRANCO, DESLIGAR, BUZZER.\n");
+                printf("Digite um comando:\n");
+                usb_message_shown = true;
+            }
+
+            int c = getchar_timeout_us(10000);
+            if (c != PICO_ERROR_TIMEOUT) {
+                putchar(c); // Mostra o caractere no terminal
+                if (c == '\r' || c == '\n') { // Verifica Enter
+                    if (index > 0) {
+                        command[index] = '\0';
+                        printf("\nComando recebido: %s\n", command);
+                        control_leds(command);
+                        index = 0;
+                        memset(command, 0, sizeof(command));
+                    }
+                } else if (index < sizeof(command) - 1) {
+                    command[index++] = (char)c;
+                }
+            }
+        } else {
+            usb_message_shown = false;
+            sleep_ms(1000);
+        }
     }
-    
+
+    return 0;
 }
