@@ -19,16 +19,20 @@
         <td>Alexandro Soares</td>
     </tr>
     <tr>
-        <td>Diagram.json: </td>
-        <td>Helen Santos</td>
-    </tr>
-    <tr>
         <td>Leds: </td>
         <td>Edna Rodrigues</td>
     </tr>
     <tr>
+        <td>Diagram.json: </td>
+        <td>Helen Santos</td>
+    </tr>    
+    <tr>
         <td>Buzzer: </td>
         <td>Daniel Santos</td>
+    </tr> 
+    <tr>
+        <td>Buzzer: </td>
+        <td>Kauan Farias</td>
     </tr>  
     <tr>
         <td>Readme: </td>
