@@ -10,17 +10,16 @@
       "left": 147.55,
       "attrs": { "builder": "pico-sdk" }
     },
-    { 
-      "type": "wokwi-buzzer", 
-      "id": "bz1", 
-      "top": 2.4, "left": 261, 
+    { "type": "wokwi-buzzer", 
+      "id": "bz1", "top": 2.4, 
+      "left": 261, 
       "attrs": { "volume": "0.1" } },
-    { 
+    {
       "type": "wokwi-rgb-led",
-      "id": "rgb1", 
-      "top": -15.2, 
-      "left": 1.1, 
-      "attrs": { "common": "cathode" } 
+      "id": "rgb1",
+      "top": -15.2,
+      "left": 1.1,
+      "attrs": { "common": "cathode" }
     },
     {
       "type": "wokwi-resistor",
@@ -33,8 +32,8 @@
     {
       "type": "wokwi-resistor",
       "id": "r2",
-      "top": 80.2,
-      "left": -0.85,
+      "top": 61,
+      "left": 37.55,
       "rotate": 270,
       "attrs": { "value": "1000" }
     },
@@ -42,7 +41,7 @@
       "type": "wokwi-resistor",
       "id": "r3",
       "top": 80.2,
-      "left": 18.35,
+      "left": 8.75,
       "rotate": 270,
       "attrs": { "value": "1000" }
     }
@@ -53,9 +52,9 @@
     [ "rgb1:COM", "pico:GND.4", "black", [ "v0" ] ],
     [ "rgb1:R", "r1:2", "red", [ "v0" ] ],
     [ "r1:1", "pico:GP13", "red", [ "h0", "v38.4" ] ],
-    [ "rgb1:G", "r2:2", "blue", [ "v0" ] ],
-    [ "r2:1", "pico:GP12", "blue", [ "h0", "v9.6" ] ],
-    [ "rgb1:B", "r3:2", "green", [ "v0" ] ],
+    [ "rgb1:B", "r2:2", "blue", [ "v0" ] ],
+    [ "r2:1", "pico:GP12", "blue", [ "h0", "v19.2" ] ],
+    [ "rgb1:G", "r3:2", "green", [ "v0" ] ],
     [ "r3:1", "pico:GP11", "green", [ "h0" ] ]
   ],
   "dependencies": {}
